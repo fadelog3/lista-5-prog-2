@@ -1,0 +1,103 @@
+#Questão 1
+# a função find_nb tem como objetivo encontrar a menor distância de um ponto dado para um lista de pontos
+# primeiramente ele calcula as distâncias entre os pontos da lista e o ponto dado e depois retorna a menor distância e o índice do ponto com a menor distância 
+# A complexidade desse código é O(n), com n sendo o tamanho da lista, pois ele percorre a lista inteira de pontos
+
+#Questão 2
+    def dfs_iterative(start_x, start_y):
+        """Iterative DFS to generate the maze."""
+        stack = [(start_x, start_y)]  # Initialize the stack with the starting cell
+
+        while stack:
+            x, y = stack.pop()  # Get the current cell from the stack
+            # Mark the current cell as visited by making it a path (room)
+            maze[2 * x + 1][2 * y + 1] = room
+
+            # Shuffle the directions to create a random path
+            random.shuffle(directions)
+
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy  # New cell coordinates
+                if 0 <= nx < m and 0 <= ny < n and maze[2 * nx + 1][2 * ny + 1] == wall:
+                    # Open the wall between the current cell and the new cell
+                    maze[2 * x + 1 + dx][2 * y + 1 + dy] = room
+                    stack.append((nx, ny))  # Push the new cell onto the stack
+                    random.shuffle(directions)
+
+
+#Questão 4
+#estamos assumindo que a lista de adjacencia sera passada em forma de dicionario, onde a chave é um vertice e o valor a lista de vertices conectados a chave
+class Grafo:
+  def __init__(self, pontos):
+    self.pontos= pontos
+    self.valores={}
+
+  def __str__(self):
+    resultado = []
+    for ponto in self.pontos:
+        resultado.append(f"{ponto}: {self.pontos[ponto]}")
+    return ",".join(resultado)
+
+  def adjacent(self, x, y):
+    if x in self.pontos and y in self.pontos[x]:
+        return True
+    return False
+
+  def neighbors(self, x):
+    if x in self.pontos:
+      return self.pontos[x]
+    return None
+
+  def add_vertex(self,x):
+    if x not in self.pontos:
+      self.pontos[x]=[]
+      return True
+    else:
+      return False
+
+  def remove_vertex(self,x):
+    if x in self.pontos:
+      self.pontos.pop(x)
+      return True
+    return False  
+
+  def add_edge(self, x, y):
+    if y in self.pontos:#so podemos ligar o vertice se os dois estiverem no dicionario
+      if x in self.pontos and y not in self.pontos[x]:   
+        self.pontos[x].append(y)
+        return True
+    return False
+
+  def remove_edge(self, x, y):
+    if x in self.pontos and y in self.pontos[x]:
+      self.pontos[x].remove(y)
+      return True
+    return False
+
+  def set_vertex_value(self,x,v):
+    self.valores[x]=v
+
+  def get_vertex_value(self, x):
+    if x in self.valores:
+      return self.valores[x]
+    return None
+
+
+
+
+if __name__ == '__main__':
+  grafo=Grafo({'a':['b', 'd', 'e'], 'b':['c'], 'c':['d'], 'd':[], 'e':[]})
+  print(grafo.adjacent('a', 'b'))
+  print(grafo.neighbors('a'))
+  print(grafo.add_vertex('f'))
+  print(grafo)
+  print(grafo.remove_vertex('f'))
+  print(grafo)
+  print(grafo.add_edge('a', 'c'))
+  print(grafo)
+  print(grafo.remove_edge('a', 'c'))
+  print(grafo)
+  grafo.set_vertex_value('a', 2)
+  print(grafo.valores)
+  valor=grafo.get_vertex_value('a')
+  print(valor)
