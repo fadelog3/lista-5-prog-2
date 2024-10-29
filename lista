@@ -4,6 +4,9 @@
 # A complexidade desse código é O(n), com n sendo o tamanho da lista, pois ele percorre a lista inteira de pontos
 
 #Questão 2
+
+import random
+
     def dfs_iterative(start_x, start_y):
         """Iterative DFS to generate the maze."""
         stack = [(start_x, start_y)]  # Initialize the stack with the starting cell
