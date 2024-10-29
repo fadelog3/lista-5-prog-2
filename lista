@@ -3,7 +3,7 @@
 # primeiramente ele calcula as distâncias entre os pontos da lista e o ponto dado e depois retorna a menor distância e o índice do ponto com a menor distância 
 # A complexidade desse código é O(n), com n sendo o tamanho da lista, pois ele percorre a lista inteira de pontos
 
-# python 3
+#Questão 2
 import random
 
 def generate_maze(m, n, room = 0, wall = 1, cheese = '.' ):
