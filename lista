@@ -3,8 +3,7 @@
 # primeiramente ele calcula as distâncias entre os pontos da lista e o ponto dado e depois retorna a menor distância e o índice do ponto com a menor distância 
 # A complexidade desse código é O(n), com n sendo o tamanho da lista, pois ele percorre a lista inteira de pontos
 
-#Questão 2
-
+# python 3
 import random
 
 def generate_maze(m, n, room = 0, wall = 1, cheese = '.' ):
@@ -15,32 +14,26 @@ def generate_maze(m, n, room = 0, wall = 1, cheese = '.' ):
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
     def dfs_iterative(start_x, start_y):
-        """Iterative DFS to generate the maze."""
-        stack = [(start_x, start_y, 2*start_x+1, 2*start_y+1)]  # Initialize the stack with the starting cell
+        stack = [(start_x, start_y, 2*start_x+1, 2*start_y+1)]  
 
         while stack:
-            x, y, d, e = stack.pop()  # Get the current cell from the stack
+            x, y, x1, y1 = stack.pop()
             if maze[2*x+1][2*y+1]== room:
               continue
-            # Mark the current cell as visited by making it a path (room)
             maze[2 * x + 1][2 * y + 1] = room
-            maze[d][e] = room
+            maze[x1][y1] = room
 
-            # Shuffle the directions to create a random path
             random.shuffle(directions)
 
             for dx, dy in directions:
-                nx, ny = x + dx, y + dy  # New cell coordinates
+                nx, ny = x + dx, y + dy
                 if 0 <= nx < m and 0 <= ny < n and maze[2 * nx + 1][2 * ny + 1] == wall:
-                    # Open the wall between the current cell and the new cell
-                    stack.append((nx, ny, 2 * x + 1 + dx, 2 * y + 1 + dy))  # Push the new cell onto the stack
-                    #random.shuffle(directions)
-    # Start DFS from the top-left corner (0, 0) of the logical grid
+                    stack.append((nx, ny, 2 * x + 1 + dx, 2 * y + 1 + dy))
 
     dfs_iterative(0, 0)
 
     count = 0
-    while True: # placing the chesse
+    while True:
         i = int(random.uniform(0, 2 * m))
         j = int(random.uniform(0, 2 * m))
         count += 1
@@ -54,9 +47,8 @@ def print_maze(maze):
     for row in maze:
         print(" ".join(map(str, row)))
 
-# Example usage:
 if __name__ == '__main__':
-    m, n = 5, 7  # Grid size
+    m, n = 5, 7  
     maze = generate_maze(m, n)
     print('Maze 1')
     print_maze(maze)
@@ -67,7 +59,6 @@ if __name__ == '__main__':
     maze = generate_maze(m, n, room, wall, cheese)
     print('\nMaze 2')
     print_maze(maze)
-
 
 #Questão 4
 #estamos assumindo que a lista de adjacencia sera passada em forma de dicionario, onde a chave é um vertice e o valor a lista de vertices conectados a chave
